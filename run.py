@@ -3,13 +3,15 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
 class Species:
-    def __init__(self, name, health, speed, strength, intelligence):
+    def __init__(self, name, health, speed, strength, intelligence,
+                 is_predator):
         # Initial traits of the species
         self.name = name
         self.health = health
         self.speed = speed
         self.strength = strength
         self.intelligence = intelligence
+        self.is_predator = is_predator
         self.individuals = 1
 
     def mutate(self):
@@ -24,11 +26,17 @@ class Species:
         self.intelligence += mutation_strength
 
     def print_stats(self):
-        # Print current species stats including the species name
+        """
+        Print current species stats, including name
+        """
         print(f"\nSpecies: {self.name}")
         print(f"Health: {self.health}, Speed: {self.speed}, \
 Strength: {self.strength}, Intelligence: {self.intelligence}, \
 Individuals: {self.individuals}")
+        if self.is_predator:
+            print(f"{self.name} is a predator!")
+        else:
+            print(f"{self.name} is not a predator.")
 
 
 def display_intro():
@@ -84,7 +92,8 @@ def main():
         health=100,
         speed=5,
         strength=5,
-        intelligence=0
+        intelligence=0,
+        is_predator=False
         )
 
     # Print species stats to see the output
