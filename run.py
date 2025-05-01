@@ -25,39 +25,40 @@ class Species:
 
     def print_stats(self):
         # Print current species stats including the species name
-        print(f"Species: {self.name}")
-        print(f"Health={self.health}, Speed={self.speed}, \
-Strength={self.strength}, Intelligence={self.intelligence}, \
-Individuals={self.individuals}")
+        print(f"\nSpecies: {self.name}")
+        print(f"Health: {self.health}, Speed: {self.speed}, \
+Strength: {self.strength}, Intelligence: {self.intelligence}, \
+Individuals: {self.individuals}")
 
 
 def display_intro():
-    print("************************************************")
-    print("*           Welcome to EVOLUTION!             *")
-    print("*        A text-based evolution game.         *")
-    print("************************************************")
-    print("\n")
-    print("In this game, you will guide a species through its evolutionary\n\
-journey.")
-    print("You will need to manage the traits of your species, adapt to\n\
-changing environments, and face various challenges.")
-    print("Survival depends on how well you adapt, evolve, and make\n\
-decisions.")
-    print("\n")
+    intro_text = """
+************************************************
+*           Welcome to EVOLUTION!             *
+*        A text-based evolution game.         *
+************************************************
 
-    # Add your instructions here
-    print("Instructions: ")
-    print("1. Allocate points to different traits of your species.")
-    print("2. Evolve your species over multiple generations.")
-    print("3. Face threats and challenges that will test your species'\n\
-abilities.")
-    print("4. Adapt, survive, and see how your species thrives!")
-    print("\n")
-    print("Let's begin!")
-    print("************************************************")
+In this game, you will guide a species through its evolutionary journey.
+You will need to manage the traits of your species, adapt to changing
+environments, and face various challenges.
+Survival depends on how well you adapt, evolve, and make decisions.
+
+Instructions:
+1. Allocate points to different traits of your species.
+2. Evolve your species over multiple generations.
+3. Face threats and challenges that will test your species' abilities.
+4. Adapt, survive, and see how your species thrives!
+
+Let's begin!
+************************************************
+"""
+    print(intro_text)
 
 
 def name_species():
+    """
+    Lets the user name their species
+    """
     global species_name
     while True:
         species_name = input("Give your species a name (max 15 characters): ")
