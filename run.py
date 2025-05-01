@@ -16,6 +16,7 @@ class Species:
         self.intelligence = intelligence
         self.is_predator = is_predator
         self.individuals = 1
+        self.food = 0
         self.evolutionary_points = 0  # For later use!
 
     def mutate(self):
@@ -69,6 +70,17 @@ Let's begin!
     print(intro_text)
 
 
+def display_help():
+    help_text = """
+\nInstructions:
+1. Allocate points to different traits of your species.
+2. Evolve your species over multiple generations.
+3. Face threats and challenges that will test your species' abilities.
+4. Adapt, survive, and see how your species thrives!\n
+"""
+    print(help_text)
+
+
 def name_species():
     """
     Lets the user name their species
@@ -92,7 +104,7 @@ def allocate_attributes(species):
     """
     print(f"\nTime to customise the {species.name}! In the Proterozoic Era, \
 the {species.name} is a \nmulticellular organism, eager to evolve!")
-    
+
     time.sleep(2)  # Delay to ensure the next line appears later
 
     print(f"\nYou have 10 evolutionary points to allocate between \
@@ -140,6 +152,26 @@ Try again.")
         except ValueError:
             # Handle case where the input is not an integer
             print("Please enter valid numbers for strength and speed.")
+
+
+def get_input(prompt, species):
+    """
+    This function will be used to get user input throughout the game.
+    It enables the user to ask for help or check stats at every stage
+    """
+    while True:
+        user_input = input(prompt).strip().lower()
+
+        if user_input == "stats":
+            species.print_stats()
+            continue
+        elif user_input == "help":
+            display_help()
+            continue
+        elif user_input:
+            return user_input
+        else:
+            print("Invalid input. Please try again.")
 
 
 def main():
