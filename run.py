@@ -89,9 +89,10 @@ def main():
     # Print species stats to see the output
     species.print_stats()
 
-    # Continue with game logic after the introduction
-    # You can add more gameplay steps here
 
+"""
+User needs to set stats themselves!
+"""
 
 # Start the game
 main()
