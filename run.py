@@ -2,6 +2,9 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
+import time
+
+
 class Species:
     def __init__(self, name, health=100, speed=0, strength=0, intelligence=0,
                  is_predator=False):
@@ -89,17 +92,23 @@ def allocate_attributes(species):
     """
     print(f"\nTime to customise the {species.name}! In the Proterozoic Era, \
 the {species.name} is a \nmulticellular organism, eager to evolve!")
-    print(f"\nYou have 10 evolutionary points to allocate between \
-Strength and Speed \nfor the {species.name}.")
+    
+    time.sleep(2)  # Delay to ensure the next line appears later
 
-    # Allocate 10 points between strength and speed
+    print(f"\nYou have 10 evolutionary points to allocate between \
+Strength and Speed \nfor the {species.name}.\n")
+
+    time.sleep(2)
+
     while True:
         try:
             # Get user input for strength allocation and check for validity
-            strength = int(input("Allocate points to Strength (0-10): "))
-            if strength < 0 or strength > 10:
-                print("Points must be between 0 and 10. Try again.")
-                continue
+            while True:
+                strength = int(input("Allocate points to Strength (0-10): "))
+                if strength < 0 or strength > 10:
+                    print("Points must be between 0 and 10. Try again.")
+                else:
+                    break
 
             # If the user allocates 10 points to strength, skip the speed step
             if strength == 10:
@@ -109,18 +118,20 @@ Strength and Speed \nfor the {species.name}.")
                 print(f"Strength set to {strength}, Speed set to 0.")
                 break
 
-            # If not 10, get user input for speed and check for validity
-            speed = int(input("Allocate points to Speed (0-10): "))
-            if speed < 0 or speed > 10:
-                print("Points must be between 0 and 10. Try again.")
-                continue
+            # Calculate remaining points for speed
+            remaining_points = 10 - strength
 
-            # Check that the total allocation does not exceed 10 points
-            if strength + speed > 10:
-                print("Total allocation exceeds 10 points. Try again.")
-                continue
+            # Get user input for speed allocation and check for validity
+            while True:
+                speed = int(input(f"Allocate points to \
+Speed (0-{remaining_points}): "))
+                if speed < 0 or speed > remaining_points:
+                    print(f"Points must be between 0 and {remaining_points}. \
+Try again.")
+                else:
+                    break
 
-            # If all inputs are valid, allocate the points to the species
+            # Allocate the points to the species
             species.strength = strength
             species.speed = speed
             species.evolutionary_points = 10 - (strength + speed)
@@ -138,6 +149,7 @@ def main():
     # Display the introduction when the game starts
     display_intro()
 
+    time.sleep(2)
     # Get the species name from the user
     species_name = name_species()
 
