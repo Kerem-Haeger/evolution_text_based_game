@@ -37,9 +37,9 @@ Strength: {self.strength}, Intelligence: {self.intelligence}, \
 Individuals: {self.individuals}")
 
         if self.is_predator:
-            print(f"{self.name} is a predator!")
+            print(f"The {self.name} is a predator!")
         else:
-            print(f"{self.name} is not a predator.")
+            print(f"The {self.name} is not a predator.")
 
 
 def display_intro():
@@ -90,7 +90,7 @@ def allocate_attributes(species):
     print(f"\nTime to customise the {species.name}! In the Proterozoic Era, \
 the {species.name} is a \nmulticellular organism, eager to evolve!")
     print(f"\nYou have 10 evolutionary points to allocate between \
-Strength and Speed for the {species.name}.")
+Strength and Speed \nfor the {species.name}.")
 
     # Allocate 10 points between strength and speed
     while True:
@@ -143,6 +143,7 @@ def main():
 
     # Initialize species with default health and user-defined attributes
     species = Species(name=species_name)
+    # This one is important! It enables me to use the variable 'species'!
 
     # Allow the user to allocate points to strength and speed
     allocate_attributes(species)
