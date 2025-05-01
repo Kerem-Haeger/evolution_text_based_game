@@ -87,8 +87,10 @@ def allocate_attributes(species):
     """
     Let the user allocate attributes to the species
     """
+    print(f"\nTime to customise the {species.name}! In the Proterozoic Era, \
+the {species.name} is a \nmulticellular organism, eager to evolve!")
     print(f"\nYou have 10 evolutionary points to allocate between \
-Strength and Speed for {species.name}.")
+Strength and Speed for the {species.name}.")
 
     # Allocate 10 points between strength and speed
     while True:
