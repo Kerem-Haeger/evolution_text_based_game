@@ -5,23 +5,23 @@ import random
 
 
 def ice_age(species):
-    pass
+    return "ice age"
 
 
 def volcano_eruption(species):
-    pass
+    return "volcanic eruption"
 
 
 def drought(species):
-    pass
+    return "drought"
 
 
 def flood(species):
-    pass
+    return "flood"
 
 
 def predator_attack(species):
-    pass
+    return "predator"
 
 
 events = [ice_age, volcano_eruption, drought, flood, predator_attack]
@@ -29,4 +29,4 @@ events = [ice_age, volcano_eruption, drought, flood, predator_attack]
 
 def trigger_random_event(species):
     event = random.choice(events)
-    event(species)
+    return event(species)

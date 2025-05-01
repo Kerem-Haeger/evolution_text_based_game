@@ -3,6 +3,7 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
 import time
+import events
 
 
 class Species:
@@ -41,9 +42,9 @@ Strength: {self.strength}, Intelligence: {self.intelligence}, \
 Individuals: {self.individuals}")
 
         if self.is_predator:
-            print(f"The {self.name} is a predator!")
+            print(f"The {self.name} is a predator!\n")
         else:
-            print(f"The {self.name} is not a predator.")
+            print(f"The {self.name} is not a predator.\n")
 
 
 def display_intro():
@@ -63,6 +64,10 @@ Instructions:
 2. Evolve your species over multiple generations.
 3. Face threats and challenges that will test your species' abilities.
 4. Adapt, survive, and see how your species thrives!
+
+Hint: During the game, you can check your species stats by typing "stats"
+into an input field.
+You can also look at the instructions again, by typing "help".
 
 Let's begin!
 ************************************************
@@ -151,7 +156,7 @@ Try again.")
 
         except ValueError:
             # Handle case where the input is not an integer
-            print("Please enter valid numbers for strength and speed.")
+            print("Please enter a valid number.")
 
 
 def get_input(prompt, species):
@@ -172,6 +177,14 @@ def get_input(prompt, species):
             return user_input
         else:
             print("Invalid input. Please try again.")
+
+
+def encounter_event(species, event):
+    """
+    This function generates a message when the species encounters an event
+    """
+    print(f"While gathering food, the {species.name} have encountered \
+a {event}!")
 
 
 def main():
@@ -195,6 +208,11 @@ def main():
     # Print species stats to see the output
     species.print_stats()
     print(species.evolutionary_points)  # Only for me to check!
+
+    time.sleep(2)
+
+    event = events.trigger_random_event(species)
+    encounter_event(species, event)
 
 
 # Start the game
