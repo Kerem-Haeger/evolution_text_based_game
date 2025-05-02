@@ -4,6 +4,26 @@
 import random
 
 
+class Predator:
+    def __init__(self, strength, speed):
+        self.names = [
+            "Vraxil", "Sivrok", "Zalgaroth", "Khethar", "Drathok",
+            "Veylor", "Rulgar", "Marnak", "Traskir", "Yshara",
+            "Vornash", "Gorthar", "Blaykoth", "Kryzaar", "Draxum",
+            "Zirran", "Xarvok", "Krivanth", "Heshir", "Yzool",
+            "Thrakar", "Vortha", "Zhanok", "Klarth", "Rendarr",
+            "Fylzhar", "Thallor", "Xylar", "Drakar", "Mornak",
+            "Galdoth", "Wrogar", "Kynthar", "Jhulak", "Fornash",
+            "Vornak", "Xharnok", "Zylar", "Brastok", "Vayzon",
+            "Rithar", "Vrekshar", "Jorlan", "Torvok", "Khoran",
+            "Trystar", "Vishnar", "Vorhax", "Rakshor", "Zolrith"
+            ]
+
+        self.name = random.choice(self.names)
+        self.strength = strength
+        self.speed = speed
+
+
 def ice_age(species):
     return "ice age"
 
