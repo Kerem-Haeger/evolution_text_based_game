@@ -17,75 +17,61 @@ class Predator:
             "Vornak", "Xharnok", "Zylar", "Brastok", "Vayzon",
             "Rithar", "Vrekshar", "Jorlan", "Torvok", "Khoran",
             "Trystar", "Vishnar", "Vorhax", "Rakshor", "Zolrith"
-            ]
-
+        ]
         self.name = random.choice(self.names)
         self.strength = strength
         self.speed = speed
 
     def attack(self, species):
-        print(f"The {self.name} attacks {species.name}!")
+        print(f"\nThe {self.name} attacks the {species.name}!")
 
         species_chance = species.strength / (species.strength + self.strength)
-
         outcome = random.random()
 
         if outcome < species_chance:
-            print(f"{species.name} manages to fend off the attack!")
-
-            damage = round(self.strength * random.uniform(0.1, 0.5))
+            print(f"\nThe {species.name} manages to fend off the attack!")
+            damage = round(self.strength * random.uniform(0.1, 0.3))
             species.health -= damage
-            print(f"{species.name} takes {damage} damage but survives \
-the attack!")
+            print(f"\nThe {species.name} takes {damage} damage but \
+survives the attack!\n The {species.name} now has {species.health} health.")
         else:
-            print(f"The {self.name} overpowers {species.name}!")
+            print(f"\nThe {self.name} overpowers {species.name}!")
             damage = round(self.strength * random.uniform(0.5, 1.5))
             species.health -= damage
-            print(f"{species.name}'s health is now {species.health}.")
+            print(f"\nThe {species.name}'s health is now {species.health}.")
 
         if species.health <= 0:
-            print(f"{species.name} has been defeated!")
-            # Here I need to call a 'game ends' function at some point!
-        elif self.health <= 0:
-            print(f"{self.name} has been defeated!")
+            print(f"\nThe {species.name} has been defeated!")
 
     def flee(self, species):
-
         adjusted_species_speed = species.speed / (1 + 0.1 * (
             species.individuals - 1
             ))
 
-        print(f"{species.name} is attempting to flee from the {self.name}!")
+        print(f"\nThe {species.name} is attempting to flee from \
+the {self.name}!")
 
-        # Compare adjusted species speed with predator's speed
         if adjusted_species_speed > self.speed:
-            print(f"{species.name} successfully flees from the {self.name}!")
-            return True  # Flee successful
+            print(f"\nThe {species.name} successfully flees from \
+the {self.name}!")
+            damage = round(self.strength * random.uniform(0.1, 0.3))
+            species.health -= damage
+            print(f"\nThe{species.name} takes {damage} damage but survives \
+the encounter!\n The {species.name} now has {species.health} health.")
+            return True
         else:
-            print(f"The {self.name} catches up to {species.name}!")
+            print(f"\nThe {self.name} catches up to the {species.name}!")
 
             if species.individuals > 1:
+                outcome = random.choice(["individuals"])
 
-                outcome = random.choice(["health", "individuals"])
-
-                if outcome == "health":
-                    damage = round(self.strength * random.uniform(0.5, 1))
-                    species.health -= damage
-                    print(f"{species.name} takes {damage} damage from the \
-predator! Health is now {species.health}.")
-                elif outcome == "individuals":
+                if outcome == "individuals":
                     lost_individuals = random.randint(
                         1, species.individuals // 2
                         )
                     species.individuals -= lost_individuals
-                    print(f"{species.name} loses {lost_individuals} \
+                    print(f"\nThe{species.name} loses {lost_individuals} \
 individuals! The remaining individuals: {species.individuals}.")
-
-            else:
-
-                damage = round(self.strength * random.uniform(0.5, 1.5))
-                species.health -= damage
-                print(f"{species.name}'s health is now {species.health}.")
 
             self.attack(species)
             return False

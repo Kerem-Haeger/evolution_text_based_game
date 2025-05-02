@@ -1,9 +1,14 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+#
+#
+#
+#
+# remember to uncomment the time.sleep!!!!
 
-import time
-import events
+# import time
+from events import Predator
 
 
 class Species:
@@ -111,12 +116,12 @@ def allocate_attributes(species):
     print(f"\nTime to customise the {species.name}! In the Proterozoic Era, \
 the {species.name} is a \nmulticellular organism, eager to evolve!")
 
-    time.sleep(2)  # Delay to ensure the next line appears later
+    # time.sleep(2)  # Delay to ensure the next line appears later
 
     print(f"\nYou have 10 evolutionary points to allocate between \
 Strength and Speed \nfor the {species.name}.\n")
 
-    time.sleep(2)
+    # time.sleep(2)
 
     while True:
         try:
@@ -187,7 +192,7 @@ def main():
     # Display the introduction when the game starts
     display_intro()
 
-    time.sleep(2)
+    # time.sleep(2)
     # Get the species name from the user
     species_name = name_species()
 
@@ -202,7 +207,35 @@ def main():
     species.print_stats()
     print(species.evolutionary_points)  # Only for me to check!
 
-    time.sleep(2)
+    # time.sleep(2)
+
+    # Example of initializing a predator with strength and speed
+    predator = Predator(strength=20, speed=12)
+
+    # Basic game loop to prompt the user
+    while species.health > 0:
+        print(f"\nThe {species.name} has encountered a {predator.name}!\n")
+        print(f"The {species.name} has {species.health} health.\n")
+        action = input("Do you want to 'fight' or 'flee'? ").strip().lower()
+
+        # Check if the action input contains "fight" or "flee"
+        if "fight" in action:
+            predator.attack(species)  # Predator attacks the species
+            break
+        elif "flee" in action:
+            predator.flee(species)  # Attempt to flee
+            break
+        else:
+            print("Invalid action. Please include 'fight' or 'flee' \
+in your input.")
+
+        # Check if species has been defeated, this is for later!
+        if species.health <= 0:
+            print(f"{species.name} has been defeated!")
+            break
+        else:
+            print(f"{species.name} is still standing with {species.health} \
+health.")
 
 
 # Start the game
