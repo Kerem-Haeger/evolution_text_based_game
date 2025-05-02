@@ -69,7 +69,8 @@ Instructions:
 1. Allocate points to different traits of your species.
 2. Evolve your species over multiple generations.
 3. Face threats and challenges that will test your species' abilities.
-4. Adapt, survive, and see how your species thrives!
+4. Explore the world, in order to discover new environments, and evolve.
+5. Adapt, survive, and see how your species thrives!
 
 Hint: During the game, you can check your species stats by typing "stats"
 into an input field.
@@ -87,7 +88,8 @@ def display_help():
 1. Allocate points to different traits of your species.
 2. Evolve your species over multiple generations.
 3. Face threats and challenges that will test your species' abilities.
-4. Adapt, survive, and see how your species thrives!\n
+4. Explore the world, in order to discover new environments, and evolve.
+5. Adapt, survive, and see how your species thrives!\n
 """
     print(help_text)
 
