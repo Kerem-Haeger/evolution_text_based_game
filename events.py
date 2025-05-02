@@ -35,7 +35,7 @@ class Predator:
             print(f"\nThe {species.name} takes {damage} damage but \
 survives the attack!\n The {species.name} now has {species.health} health.")
         else:
-            print(f"\nThe {self.name} overpowers {species.name}!")
+            print(f"\nThe {self.name} overpowers the {species.name}!")
             damage = round(self.strength * random.uniform(0.5, 1.5))
             species.health -= damage
             print(f"\nThe {species.name}'s health is now {species.health}.")

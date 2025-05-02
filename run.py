@@ -187,6 +187,39 @@ def get_input(prompt, species):
             print("Invalid input. Please try again.")
 
 
+def predator_encounter(species):
+    predator = Predator(strength=15, speed=10)
+
+    print(f"\nThe {species.name} has encountered a {predator.name}!\n")
+    print(f"The {species.name} has {species.health} health.\n")
+
+    # Basic game loop to prompt the user
+    while species.health > 0:
+        # print(f"\nThe {species.name} has encountered a {predator.name}!\n")
+        # print(f"The {species.name} has {species.health} health.\n")
+        action = input("Do you want to 'fight' or 'flee'? ").strip().lower()
+
+        # Check if the action input contains "fight" or "flee"
+        if "fight" in action:
+            predator.attack(species)  # Predator attacks the species
+            break
+        elif "flee" in action:
+            predator.flee(species)  # Attempt to flee
+            break
+        else:
+            print("Invalid action. Please include 'fight' or 'flee' \
+in your input.")
+            continue
+
+        # Check if species has been defeated, this is for later!
+        if species.health <= 0:
+            print(f"{species.name} has been defeated!")
+            break
+        else:
+            print(f"{species.name} is still standing with {species.health} \
+health.")
+
+
 def main():
     """
     Main function to start the game
@@ -214,32 +247,7 @@ def main():
     # Example of initializing a predator with strength and speed
     # later, the values for strength and speed will be randomised, but with
     # a multiplier depending on the progress of the game
-    predator = Predator(strength=15, speed=10)
-
-    # Basic game loop to prompt the user
-    while species.health > 0:
-        print(f"\nThe {species.name} has encountered a {predator.name}!\n")
-        print(f"The {species.name} has {species.health} health.\n")
-        action = input("Do you want to 'fight' or 'flee'? ").strip().lower()
-
-        # Check if the action input contains "fight" or "flee"
-        if "fight" in action:
-            predator.attack(species)  # Predator attacks the species
-            break
-        elif "flee" in action:
-            predator.flee(species)  # Attempt to flee
-            break
-        else:
-            print("Invalid action. Please include 'fight' or 'flee' \
-in your input.")
-
-        # Check if species has been defeated, this is for later!
-        if species.health <= 0:
-            print(f"{species.name} has been defeated!")
-            break
-        else:
-            print(f"{species.name} is still standing with {species.health} \
-health.")
+    predator_encounter(species)
 
 
 # Start the game
