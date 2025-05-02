@@ -210,7 +210,9 @@ def main():
     # time.sleep(2)
 
     # Example of initializing a predator with strength and speed
-    predator = Predator(strength=20, speed=12)
+    # later, the values for strength and speed will be randomised, but with
+    # a multiplier depending on the progress of the game
+    predator = Predator(strength=15, speed=10)
 
     # Basic game loop to prompt the user
     while species.health > 0:
