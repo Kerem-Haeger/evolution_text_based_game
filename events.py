@@ -49,6 +49,47 @@ the attack!")
         elif self.health <= 0:
             print(f"{self.name} has been defeated!")
 
+    def flee(self, species):
+
+        adjusted_species_speed = species.speed / (1 + 0.1 * (
+            species.individuals - 1
+            ))
+
+        print(f"{species.name} is attempting to flee from the {self.name}!")
+
+        # Compare adjusted species speed with predator's speed
+        if adjusted_species_speed > self.speed:
+            print(f"{species.name} successfully flees from the {self.name}!")
+            return True  # Flee successful
+        else:
+            print(f"The {self.name} catches up to {species.name}!")
+
+            if species.individuals > 1:
+
+                outcome = random.choice(["health", "individuals"])
+
+                if outcome == "health":
+                    damage = round(self.strength * random.uniform(0.5, 1))
+                    species.health -= damage
+                    print(f"{species.name} takes {damage} damage from the \
+predator! Health is now {species.health}.")
+                elif outcome == "individuals":
+                    lost_individuals = random.randint(
+                        1, species.individuals // 2
+                        )
+                    species.individuals -= lost_individuals
+                    print(f"{species.name} loses {lost_individuals} \
+individuals! The remaining individuals: {species.individuals}.")
+
+            else:
+
+                damage = round(self.strength * random.uniform(0.5, 1.5))
+                species.health -= damage
+                print(f"{species.name}'s health is now {species.health}.")
+
+            self.attack(species)
+            return False
+
 
 def ice_age(species):
     return "ice age"
