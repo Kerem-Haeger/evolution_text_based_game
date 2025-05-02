@@ -18,6 +18,7 @@ class Species:
         self.is_predator = is_predator
         self.individuals = 1
         self.food = 0
+        self.experience = 0
         self.evolutionary_points = 0  # For later use!
 
     def mutate(self):
