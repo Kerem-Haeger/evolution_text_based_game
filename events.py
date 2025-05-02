@@ -23,6 +23,32 @@ class Predator:
         self.strength = strength
         self.speed = speed
 
+    def attack(self, species):
+        print(f"The {self.name} attacks {species.name}!")
+
+        species_chance = species.strength / (species.strength + self.strength)
+
+        outcome = random.random()
+
+        if outcome < species_chance:
+            print(f"{species.name} manages to fend off the attack!")
+
+            damage = round(self.strength * random.uniform(0.1, 0.5))
+            species.health -= damage
+            print(f"{species.name} takes {damage} damage but survives \
+the attack!")
+        else:
+            print(f"The {self.name} overpowers {species.name}!")
+            damage = round(self.strength * random.uniform(0.5, 1.5))
+            species.health -= damage
+            print(f"{species.name}'s health is now {species.health}.")
+
+        if species.health <= 0:
+            print(f"{species.name} has been defeated!")
+            # Here I need to call a 'game ends' function at some point!
+        elif self.health <= 0:
+            print(f"{self.name} has been defeated!")
+
 
 def ice_age(species):
     return "ice age"

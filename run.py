@@ -180,14 +180,6 @@ def get_input(prompt, species):
             print("Invalid input. Please try again.")
 
 
-def encounter_event(species, event):
-    """
-    This function generates a message when the species encounters an event
-    """
-    print(f"While gathering food, the {species.name} have encountered \
-a {event}!")
-
-
 def main():
     """
     Main function to start the game
@@ -211,9 +203,6 @@ def main():
     print(species.evolutionary_points)  # Only for me to check!
 
     time.sleep(2)
-
-    event = events.trigger_random_event(species)
-    encounter_event(species, event)
 
 
 # Start the game
