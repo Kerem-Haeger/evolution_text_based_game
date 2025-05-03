@@ -172,19 +172,12 @@ def get_input(prompt, species):
     This function will be used to get user input throughout the game.
     It enables the user to ask for help or check stats at every stage
     """
-    while True:
-        user_input = input(prompt).strip().lower()
-
-        if user_input == "stats":
-            species.print_stats()
-            continue
-        elif user_input == "help":
-            display_help()
-            continue
-        elif user_input:
-            return user_input
-        else:
-            print("Invalid input. Please try again.")
+    if "stats" in prompt:
+        species.print_stats()
+    elif "help" in prompt:
+        display_help()
+    else:
+        print("Invalid input. Please try again.")
 
 
 def predator_encounter(species):
@@ -207,8 +200,7 @@ def predator_encounter(species):
             predator.flee(species)  # Attempt to flee
             break
         else:
-            print("Invalid action. Please include 'fight' or 'flee' \
-in your input.")
+            get_input(action, species)
             continue
 
         # Check if species has been defeated, this is for later!
@@ -244,7 +236,7 @@ def main():
 
     # time.sleep(2)
 
-    # Example of initializing a predator with strength and speed
+    # Example of initializing a predator
     # later, the values for strength and speed will be randomised, but with
     # a multiplier depending on the progress of the game
     predator_encounter(species)
