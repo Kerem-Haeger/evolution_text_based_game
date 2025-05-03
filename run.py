@@ -157,8 +157,8 @@ Try again.")
 
 def get_input(prompt, species):
     """
-    This function will be used to get user input throughout the game.
-    It enables the user to ask for help or check stats at every stage
+    This function calls the stats of the species as well as the instruction
+    text whenever called upon.
     """
     if "stats" in prompt:
         species.print_stats()
@@ -177,16 +177,14 @@ the {predator.name}!\n")
 
     # Basic game loop to prompt the user
     while species.health > 0:
-        # print(f"\nThe {species.name} has encountered a {predator.name}!\n")
-        # print(f"The {species.name} has {species.health} health.\n")
         action = input("Do you want to 'fight' or 'flee'? ").strip().lower()
 
-        # Check if the action input contains "fight" or "flee"
-        if "fight" in action:
-            predator.attack(species)  # Predator attacks the species
+        if "fight" in action or "attack" in action:
+            print(f"The {species.name} decided to stand its ground and fight!")
+            predator.attack(species)
             break
-        elif "flee" in action:
-            predator.flee(species)  # Attempt to flee
+        elif "flee" in action or "flight" in action:
+            predator.flee(species)
             break
         else:
             get_input(action, species)
