@@ -57,7 +57,7 @@ the {self.name}!")
             damage = round(self.strength * random.uniform(0.1, 0.3))
             species.health -= damage
             print(f"\nThe{species.name} takes {damage} damage but survives \
-the encounter!\n The {species.name} now has {species.health} health.")
+the encounter!\nThe {species.name} now has {species.health} health.")
             return True
         else:
             print(f"\nThe {self.name} catches up to the {species.name}!")

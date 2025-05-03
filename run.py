@@ -8,6 +8,7 @@
 # remember to uncomment the time.sleep!!!!
 
 # import time
+import re
 from events import Predator
 
 
@@ -54,44 +55,31 @@ Individuals: {self.individuals}")
 
 
 def display_intro():
-    intro_text = """
-************************************************
-*           Welcome to EVOLUTION!             *
-*        A text-based evolution game.         *
-************************************************
-
-In this game, you will guide a species through its evolutionary journey.
-You will need to manage the traits of your species, adapt to changing
-environments, and face various challenges.
-Survival depends on how well you adapt, evolve, and make decisions.
-
-Instructions:
-1. Allocate points to different traits of your species.
-2. Evolve your species over multiple generations.
-3. Face threats and challenges that will test your species' abilities.
-4. Explore the world, in order to discover new environments, and evolve.
-5. Adapt, survive, and see how your species thrives!
-
-Hint: During the game, you can check your species stats by typing "stats"
-into an input field.
-You can also look at the instructions again, by typing "help".
-
-Let's begin!
-************************************************
-"""
-    print(intro_text)
+    try:
+        with open("intro_text.txt", "r") as file:
+            intro_text = file.read()
+            print(intro_text)
+    except FileNotFoundError:
+        print("intro not found")
 
 
 def display_help():
-    help_text = """
-\nInstructions:
-1. Allocate points to different traits of your species.
-2. Evolve your species over multiple generations.
-3. Face threats and challenges that will test your species' abilities.
-4. Explore the world, in order to discover new environments, and evolve.
-5. Adapt, survive, and see how your species thrives!\n
-"""
-    print(help_text)
+    try:
+        with open("intro_text.txt", "r") as file:
+            intro_text = file.read()
+
+            match = re.search(
+                r"Instructions:(.*?)(?=\n\s*Hint:|$)", intro_text, re.DOTALL
+                )
+
+            if match:
+                instructions = match.group(1).strip()
+                print("\nInstructions:")
+                print(f"{instructions}\n")
+            else:
+                print("Instructions section not found in the file.")
+    except FileNotFoundError:
+        print("Intro file not found!")
 
 
 def name_species():
@@ -183,7 +171,8 @@ def get_input(prompt, species):
 def predator_encounter(species):
     predator = Predator(strength=15, speed=10)
 
-    print(f"\nThe {species.name} has encountered a {predator.name}!\n")
+    print(f"\nThe {species.name} has encountered a predator, \
+the {predator.name}!\n")
     print(f"The {species.name} has {species.health} health.\n")
 
     # Basic game loop to prompt the user
