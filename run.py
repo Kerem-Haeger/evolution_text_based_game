@@ -20,11 +20,11 @@ class Species:
         self.health = health
         self.speed = speed
         self.strength = strength
-        self.intelligence = intelligence
-        self.is_predator = is_predator
+        self.intelligence = intelligence  # Later use?
+        self.is_predator = is_predator  # Determine what food to get
         self.individuals = 1
-        self.food = 0
-        self.experience = 0
+        self.food = 0  # To multiply
+        self.experience = 0  # To level up and progress in time!
         self.evolutionary_points = 0  # For later use!
 
     def mutate(self):
@@ -55,6 +55,9 @@ Individuals: {self.individuals}")
 
 
 def display_intro():
+    """
+    This is shown at the start of the game
+    """
     try:
         with open("intro_text.txt", "r") as file:
             intro_text = file.read()
@@ -64,6 +67,10 @@ def display_intro():
 
 
 def display_help():
+    """
+    When the user types 'help' into the terminal,
+    this will show the instructions
+    """
     try:
         with open("intro_text.txt", "r") as file:
             intro_text = file.read()
@@ -169,6 +176,10 @@ def get_input(prompt, species):
 
 
 def predator_encounter(species):
+    """
+    When the species encounters a predator,
+    this function prompts the user for an action to take
+    """
     predator = Predator(strength=15, speed=10)
 
     print(f"\nThe {species.name} has encountered a predator, \
