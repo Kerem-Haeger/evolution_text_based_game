@@ -233,13 +233,14 @@ def main():
         action = input("Enter your choice (1/2/3/4):\n").strip().lower()
 
         if "1" in action or "gather" in action or "food" in action:
-            if random.random() < 1.1:
+            if random.random() < 0.1:
                 predator_encounter(species)
             else:
                 species.gather_food()
         elif "2" in action or "explore" in action:
-            species.explore()
-            species.evolve()
+            # species.explore()
+            # species.evolve()
+            break  # Break for now, do these functions later
         elif "3" in action or "leader" in action:
             break  # Break for now, handle leaderboard later
         elif action == "4":
