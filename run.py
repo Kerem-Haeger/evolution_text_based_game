@@ -14,7 +14,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from events import Predator
 
-
+"""
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -29,6 +29,7 @@ SHEET = GSPREAD_CLIENT.open('leaderboard')
 board = SHEET.worksheet('highscores')
 data = board.get_all_values()
 # print(data)
+"""
 
 
 def display_intro():
@@ -40,7 +41,7 @@ def display_intro():
             intro_text = file.read()
             print(intro_text)
     except FileNotFoundError:
-        print("intro not found")
+        print("Intro not found")
 
 
 def display_help():
@@ -208,14 +209,15 @@ def main():
 
     # Print species stats to see the output
     species.print_stats()
-    print(species.evolutionary_points)  # Only for me to check!
 
     # time.sleep(2)
 
     # Example of initializing a predator
     # later, the values for strength and speed will be randomised, but with
     # a multiplier depending on the progress of the game
-    predator_encounter(species)
+    # predator_encounter(species)
+
+    species.gather_food()
 
 
 # Start the game

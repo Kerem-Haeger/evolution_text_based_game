@@ -13,6 +13,7 @@ class Species:
         # Above traits are customisable and can evolve!
         self.is_predator = is_predator  # Determine what food to get
         self.individuals = 1
+        self.evolution_points = 0  # Used to evolve
         self.food = 0  # To multiply!
 
         self.determine_predator = 0  # At a certain amount, become predator
@@ -45,13 +46,7 @@ class Species:
                    self.intelligence * factors['intelligence'])
         return fitness
 
-    def set_state(self, new_state):
-        """
-        Set the species' state.
-        """
-        self.state = new_state
-
-    def mutate(self):
+    def mutate(self):  # Will use later when evolving!
         """
         Implement random mutation of traits
         """
@@ -65,6 +60,34 @@ class Species:
         self.speed = max(0, self.speed)
         self.strength = max(0, self.strength)
         self.intelligence = max(0, self.intelligence)
+
+    def gather_food(self):
+        """
+        Allow the species to gather food.
+        """
+        gathering_factor = self.fitness_factors["gathering"]
+
+        # Calculate the gathering chance based on the fitness factor
+        gathering_chance = (
+            self.speed * gathering_factor["speed"]
+            + self.strength * gathering_factor["strength"]) / 100
+        print(gathering_chance)
+        increased_chance = gathering_chance * 30
+
+        gathering_chance = min(increased_chance, 1.0)
+
+        print(f"{self.name} is attempting to gather food...")
+
+        if random.random() < gathering_chance:
+            # Successful food gathering
+            food_gathered = random.randint(5, 15)
+            self.food += food_gathered
+            print(f"{self.name} successfully gathered {food_gathered} food!")
+        else:
+            # Unsuccessful food gathering
+            print(f"{self.name} failed to gather food this time.")
+
+        print(f"{self.name} now has {self.food} food.")
 
     def print_stats(self):
         """
