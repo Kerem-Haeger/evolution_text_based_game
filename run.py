@@ -121,7 +121,8 @@ def name_species():
     """
     global species_name
     while True:
-        species_name = input("Give your species a name (max 15 characters): ")
+        species_name = input("Give your species a name \
+(max 15 characters): \n")
         if len(species_name) > 15:
             print("Name is too long! Please enter a name with 15 characters \
 or less.")
@@ -150,7 +151,7 @@ Strength and Speed \nfor the {species.name}.\n")
         try:
             # Get user input for strength allocation and check for validity
             while True:
-                strength = int(input("Allocate points to Strength (0-10): "))
+                strength = int(input("Allocate points to Strength (0-10): \n"))
                 if strength < 0 or strength > 10:
                     print("Points must be between 0 and 10. Try again.")
                 else:
@@ -170,7 +171,7 @@ Strength and Speed \nfor the {species.name}.\n")
             # Get user input for speed allocation and check for validity
             while True:
                 speed = int(input(f"Allocate points to \
-Speed (0-{remaining_points}): "))
+Speed (0-{remaining_points}): \n"))
                 if speed < 0 or speed > remaining_points:
                     print(f"Points must be between 0 and {remaining_points}. \
 Try again.")
@@ -214,7 +215,7 @@ the {predator.name}!\n")
 
     # Basic game loop to prompt the user
     while species.health > 0:
-        action = input("Do you want to 'fight' or 'flee'? ").strip().lower()
+        action = input("Do you want to 'fight' or 'flee'? \n").strip().lower()
 
         if "fight" in action or "attack" in action:
             print(f"The {species.name} decided to stand its ground and fight!")
