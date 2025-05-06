@@ -9,6 +9,7 @@
 
 # import time
 import re
+import random
 from events import Predator
 
 
@@ -21,22 +22,29 @@ class Species:
         self.speed = speed
         self.strength = strength
         self.intelligence = intelligence  # Later use?
+        # Above traits are customisable and can evolve!
         self.is_predator = is_predator  # Determine what food to get
         self.individuals = 1
         self.food = 0  # To multiply
         self.experience = 0  # To level up and progress in time!
         self.evolutionary_points = 0  # For later use!
+        self.num_of_fights = 0  # Determine predominant strategy and fitness
+        self.num_of_flee = 0  # Determine predominant strategy and fitness
 
     def mutate(self):
         """
         Implement random mutation of traits
         """
-        import random
-        mutation_strength = random.uniform(-0.5, 0.5)
-        self.health += mutation_strength
-        self.speed += mutation_strength
-        self.strength += mutation_strength
-        self.intelligence += mutation_strength
+        # For each trait, generate a random mutation value (-1, 0, or 1)
+        self.health += random.choice([-1, 0, 1])
+        self.speed += random.choice([-1, 0, 1])
+        self.strength += random.choice([-1, 0, 1])
+        self.intelligence += random.choice([-1, 0, 1])
+
+        self.health = max(0, self.health)
+        self.speed = max(0, self.speed)
+        self.strength = max(0, self.strength)
+        self.intelligence = max(0, self.intelligence)
 
     def print_stats(self):
         """
