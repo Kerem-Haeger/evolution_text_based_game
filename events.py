@@ -32,6 +32,8 @@ class Predator:
             print(f"\nThe {species.name} manages to fend off the attack!")
             damage = round(self.strength * random.uniform(0.1, 0.3))
             species.health -= damage
+            species.determine_predator += 1
+
             print(f"\nThe {species.name} takes {damage} damage but \
 survives the attack!\nThe {species.name} now has {species.health} health.")
         else:

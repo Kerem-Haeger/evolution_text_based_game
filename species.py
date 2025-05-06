@@ -9,15 +9,13 @@ class Species:
         self.health = health
         self.speed = speed
         self.strength = strength
-        self.intelligence = intelligence  # Later use?
+        self.intelligence = intelligence  # Will show up in the Mesozoic Era
         # Above traits are customisable and can evolve!
         self.is_predator = is_predator  # Determine what food to get
         self.individuals = 1
-        self.food = 0  # To multiply
-        self.experience = 0  # To level up and progress in time!
-        self.evolutionary_points = 0  # For later use!
-        self.num_of_fights = 0  # Determine predominant strategy and fitness
-        self.num_of_flee = 0  # Determine predominant strategy and fitness
+        self.food = 0  # To multiply!
+
+        self.determine_predator = 0  # At a certain amount, become predator
 
         self.fitness_factors = {
             "hunting": {"health": 0.2, "speed": 0.4, "strength": 0.4,
