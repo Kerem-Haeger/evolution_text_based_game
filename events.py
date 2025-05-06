@@ -34,21 +34,23 @@ class Predator:
             species.health -= damage
             species.determine_predator += 1
 
-            print(f"\nThe {species.name} takes {damage} damage but \
-survives the attack!\nThe {species.name} now has {species.health} health.")
+            print(f"\nThe {species.name} takes {damage} damage but survives \
+the attack!\nThe {species.name} now has {species.health} health.")
         else:
             print(f"\nThe {self.name} overpowers the {species.name}!")
             damage = round(self.strength * random.uniform(0.5, 1.5))
             species.health -= damage
             print(f"\nThe {species.name}'s health is now {species.health}.")
 
+        # Return a boolean to indicate if the species survived the encounter
         if species.health <= 0:
             print(f"\nThe {species.name} has been defeated!")
+            return False  # Species is defeated
+        return True  # Species survived the attack
 
     def flee(self, species):
-        adjusted_species_speed = species.speed / (1 + 0.1 * (
-            species.individuals - 1
-            ))
+        adjusted_species_speed = species.speed / (
+            1 + 0.1 * (species.individuals - 1))
 
         print(f"\nThe {species.name} is attempting to flee from \
 the {self.name}!")
@@ -58,9 +60,9 @@ the {self.name}!")
 the {self.name}!")
             damage = round(self.strength * random.uniform(0.1, 0.3))
             species.health -= damage
-            print(f"\nThe{species.name} takes {damage} damage but survives \
-the encounter!\nThe {species.name} now has {species.health} health.")
-            return True
+            print(f"\nThe {species.name} takes {damage} damage but \
+survives the encounter!\nThe {species.name} now has {species.health} health.")
+            return True  # Successfully flees, continue the game
         else:
             print(f"\nThe {self.name} catches up to the {species.name}!")
 
@@ -69,14 +71,14 @@ the encounter!\nThe {species.name} now has {species.health} health.")
 
                 if outcome == "individuals":
                     lost_individuals = random.randint(
-                        1, species.individuals // 2
-                        )
+                        1, species.individuals // 2)
                     species.individuals -= lost_individuals
-                    print(f"\nThe{species.name} loses {lost_individuals} \
+                    print(f"\nThe {species.name} loses {lost_individuals} \
 individuals! The remaining individuals: {species.individuals}.")
 
-            self.attack(species)
-            return False
+            # Attack after failing to flee
+            survived = self.attack(species)
+            return survived  # Return whether the species survived the attack
 
 
 def ice_age(species):

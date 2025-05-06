@@ -9,10 +9,11 @@
 
 # import time
 import re
-from species import Species
+import random
 import gspread
 from google.oauth2.service_account import Credentials
 from events import Predator
+
 
 """
 SCOPE = [
@@ -141,19 +142,6 @@ Try again.")
             print("Please enter a valid number.")
 
 
-def get_input(prompt, species):
-    """
-    This function calls the stats of the species as well as the instruction
-    text whenever called upon.
-    """
-    if "stats" in prompt:
-        species.print_stats()
-    elif "help" in prompt:
-        display_help()
-    else:
-        print("Invalid input. Please try again.")
-
-
 def predator_encounter(species):
     """
     When the species encounters a predator,
@@ -171,28 +159,45 @@ the {predator.name}!\n")
 
         if "fight" in action or "attack" in action:
             print(f"The {species.name} decided to stand its ground and fight!")
-            predator.attack(species)
-            break
+            survived = predator.attack(species)  # Check if species survived
+            if not survived:
+                print(f"{species.name} has been defeated!")
+                return  # Exit the loop if the species is defeated
         elif "flee" in action or "flight" in action:
-            predator.flee(species)
-            break
+            survived = predator.flee(species)  # Check if species survived
+            if not survived:
+                print(f"{species.name} has been defeated!")
+                return  # Exit the loop if the species is defeated
         else:
-            get_input(action, species)
+            print("Invalid input. Please enter 'fight' or 'flee'.")
             continue
 
-        # Check if species has been defeated, this is for later!
-        if species.health <= 0:
-            print(f"{species.name} has been defeated!")
-            break
+        # Check if species has been defeated
+        if species.health > 0:
+            break  # Exit the predator encounter and go back to main options
         else:
-            print(f"{species.name} is still standing with {species.health} \
-health.")
+            print(f"{species.name} has been defeated. Game over.")
+            return  # Exit the main loop if the species is defeated
+
+
+def get_input(prompt, species):
+    """
+    This function calls the stats of the species as well as the instruction
+    text whenever called upon.
+    """
+    if "stats" in prompt:
+        species.print_stats()
+    elif "help" in prompt:
+        display_help()
+    else:
+        print("Invalid input. Please try again.")
 
 
 def main():
     """
     Main function to start the game
     """
+    from species import Species
     # Display the introduction when the game starts
     display_intro()
 
@@ -217,7 +222,31 @@ def main():
     # a multiplier depending on the progress of the game
     # predator_encounter(species)
 
-    species.gather_food()
+    # This is the game loop!
+    while species.health > 0:
+        print("\nWhat would you like to do?")
+        print("1. Gather food")
+        print("2. Explore")
+        print("3. See the leaderboard")
+        print("4. Exit game")
+
+        action = input("Enter your choice (1/2/3/4):\n").strip().lower()
+
+        if "1" in action or "gather" in action or "food" in action:
+            if random.random() < 1.1:
+                predator_encounter(species)
+            else:
+                species.gather_food()
+        elif "2" in action or "explore" in action:
+            species.explore()
+            species.evolve()
+        elif "3" in action or "leader" in action:
+            break  # Break for now, handle leaderboard later
+        elif action == "4":
+            print("Exiting game...")
+            break
+        else:
+            get_input(action, species)
 
 
 # Start the game

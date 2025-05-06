@@ -82,7 +82,8 @@ class Species:
             # Successful food gathering
             food_gathered = random.randint(5, 15)
             self.food += food_gathered
-            print(f"{self.name} successfully gathered {food_gathered} food!")
+            print(f"{self.name} successfully gathered \
+{food_gathered} food!")
         else:
             # Unsuccessful food gathering
             print(f"{self.name} failed to gather food this time.")
