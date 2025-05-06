@@ -10,8 +10,8 @@
 # import time
 import re
 import random
-import gspread
-from google.oauth2.service_account import Credentials
+# import gspread
+# from google.oauth2.service_account import Credentials
 from events import Predator
 
 
@@ -34,9 +34,7 @@ data = board.get_all_values()
 
 
 def display_intro():
-    """
-    This is shown at the start of the game
-    """
+    """ This is shown at the start of the game """
     try:
         with open("intro_text.txt", "r") as file:
             intro_text = file.read()
@@ -60,8 +58,7 @@ def display_help():
 
             if match:
                 instructions = match.group(1).strip()
-                print("\nInstructions:")
-                print(f"{instructions}\n")
+                print(f"\nInstructions:\n{instructions}\n")
             else:
                 print("Instructions section not found in the file.")
     except FileNotFoundError:
@@ -74,11 +71,13 @@ def name_species():
     """
     global species_name
     while True:
-        species_name = input("Give your species a name \
-(max 15 characters): \n")
+        species_name = input("""
+Give your species a name (max 15 characters): \n
+                        """)
         if len(species_name) > 15:
-            print("Name is too long! Please enter a name with 15 characters \
-or less.")
+            print("""
+Name is too long! Please enter a name with 15 characters or less.
+                """)
         else:
             break
 
@@ -90,13 +89,17 @@ def allocate_attributes(species):
     """
     Let the user allocate attributes to the species
     """
-    print(f"\nTime to customise the {species.name}! In the Proterozoic Era, \
-the {species.name} is a \nmulticellular organism, eager to evolve!")
+    print(f"""
+\nTime to customise the {species.name}! In the Proterozoic Era,
+the {species.name} is a \nmulticellular organism, eager to evolve!
+    """)
 
     # time.sleep(2)  # Delay to ensure the next line appears later
 
-    print(f"\nYou have 10 evolutionary points to allocate between \
-Strength and Speed \nfor the {species.name}.\n")
+    print(f"""
+\nYou have 10 evolutionary points to allocate between Strength and Speed
+\nfor the {species.name}.\n
+    """)
 
     # time.sleep(2)
 
@@ -123,11 +126,13 @@ Strength and Speed \nfor the {species.name}.\n")
 
             # Get user input for speed allocation and check for validity
             while True:
-                speed = int(input(f"Allocate points to \
-Speed (0-{remaining_points}): \n"))
+                speed = int(input(f"""
+Allocate points to Speed (0-{remaining_points}): \n
+                            """))
                 if speed < 0 or speed > remaining_points:
-                    print(f"Points must be between 0 and {remaining_points}. \
-Try again.")
+                    print(f"""
+Points must be between 0 and {remaining_points}. Try again.
+                        """)
                 else:
                     break
 
@@ -149,8 +154,9 @@ def predator_encounter(species):
     """
     predator = Predator(strength=15, speed=10)
 
-    print(f"\nThe {species.name} has encountered a predator, \
-the {predator.name}!\n")
+    print(f"""
+\nThe {species.name} has encountered a predator, the {predator.name}!\n
+    """)
     print(f"The {species.name} has {species.health} health.\n")
 
     # Basic game loop to prompt the user

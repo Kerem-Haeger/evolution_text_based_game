@@ -19,14 +19,30 @@ class Species:
         self.determine_predator = 0  # At a certain amount, become predator
 
         self.fitness_factors = {
-            "hunting": {"health": 0.2, "speed": 0.4, "strength": 0.4,
-                        "intelligence": 0.0},
-            "gathering": {"health": 0.1, "speed": 0.3, "strength": 0.2,
-                          "intelligence": 0.4},
-            "predator": {"health": 0.3, "speed": 0.3, "strength": 0.4,
-                         "intelligence": 0.0},
-            "default": {"health": 0.3, "speed": 0.3, "strength": 0.3,
-                        "intelligence": 0.1}
+            "hunting": {
+                "health": 0.2,
+                "speed": 0.4,
+                "strength": 0.4,
+                "intelligence": 0.0
+                },
+            "gathering": {
+                "health": 0.1,
+                "speed": 0.3,
+                "strength": 0.2,
+                "intelligence": 0.4
+                },
+            "predator": {
+                "health": 0.3,
+                "speed": 0.3,
+                "strength": 0.4,
+                "intelligence": 0.0
+                },
+            "default": {
+                "health": 0.3,
+                "speed": 0.3,
+                "strength": 0.3,
+                "intelligence": 0.1
+                }
         }
 
         self.state = "default"
@@ -82,8 +98,9 @@ class Species:
             # Successful food gathering
             food_gathered = random.randint(5, 15)
             self.food += food_gathered
-            print(f"{self.name} successfully gathered \
-{food_gathered} food!")
+            print(f"""
+{self.name} successfully gathered {food_gathered} food!
+                """)
         else:
             # Unsuccessful food gathering
             print(f"{self.name} failed to gather food this time.")

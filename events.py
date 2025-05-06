@@ -23,6 +23,9 @@ class Predator:
         self.speed = speed
 
     def attack(self, species):
+        """
+        TBD
+        """
         print(f"\nThe {self.name} attacks the {species.name}!")
 
         species_chance = species.strength / (species.strength + self.strength)
@@ -34,8 +37,10 @@ class Predator:
             species.health -= damage
             species.determine_predator += 1
 
-            print(f"\nThe {species.name} takes {damage} damage but survives \
-the attack!\nThe {species.name} now has {species.health} health.")
+            print(f"""
+\nThe {species.name} takes {damage} damage but survives the attack!
+The {species.name} now has {species.health} health.
+                """)
         else:
             print(f"\nThe {self.name} overpowers the {species.name}!")
             damage = round(self.strength * random.uniform(0.5, 1.5))
@@ -52,16 +57,20 @@ the attack!\nThe {species.name} now has {species.health} health.")
         adjusted_species_speed = species.speed / (
             1 + 0.1 * (species.individuals - 1))
 
-        print(f"\nThe {species.name} is attempting to flee from \
-the {self.name}!")
+        print(f"""
+\nThe {species.name} is attempting to flee from the {self.name}!
+            """)
 
         if adjusted_species_speed > self.speed:
-            print(f"\nThe {species.name} successfully flees from \
-the {self.name}!")
+            print(f"""
+\nThe {species.name} successfully flees from the {self.name}!
+                """)
             damage = round(self.strength * random.uniform(0.1, 0.3))
             species.health -= damage
-            print(f"\nThe {species.name} takes {damage} damage but \
-survives the encounter!\nThe {species.name} now has {species.health} health.")
+            print(f"""
+\nThe {species.name} takes {damage} damage but survives the encounter!
+The {species.name} now has {species.health} health.
+                """)
             return True  # Successfully flees, continue the game
         else:
             print(f"\nThe {self.name} catches up to the {species.name}!")
@@ -73,8 +82,10 @@ survives the encounter!\nThe {species.name} now has {species.health} health.")
                     lost_individuals = random.randint(
                         1, species.individuals // 2)
                     species.individuals -= lost_individuals
-                    print(f"\nThe {species.name} loses {lost_individuals} \
-individuals! The remaining individuals: {species.individuals}.")
+                    print(f"""
+\nThe {species.name} loses {lost_individuals} individuals!
+The remaining individuals: {species.individuals}.
+                        """)
 
             # Attack after failing to flee
             survived = self.attack(species)
