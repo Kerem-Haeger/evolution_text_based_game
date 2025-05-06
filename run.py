@@ -72,8 +72,8 @@ def name_species():
     global species_name
     while True:
         species_name = input("""
-Give your species a name (max 15 characters): \n
-                        """)
+Give your species a name (max 15 characters):\n
+""")
         if len(species_name) > 15:
             print("""
 Name is too long! Please enter a name with 15 characters or less.
@@ -91,14 +91,14 @@ def allocate_attributes(species):
     """
     print(f"""
 \nTime to customise the {species.name}! In the Proterozoic Era,
-the {species.name} is a \nmulticellular organism, eager to evolve!
+the {species.name} is a multicellular organism, eager to evolve!
     """)
 
     # time.sleep(2)  # Delay to ensure the next line appears later
 
     print(f"""
-\nYou have 10 evolutionary points to allocate between Strength and Speed
-\nfor the {species.name}.\n
+You have 10 evolutionary points to allocate between Strength and Speed
+for the {species.name}.\n
     """)
 
     # time.sleep(2)
@@ -127,12 +127,12 @@ the {species.name} is a \nmulticellular organism, eager to evolve!
             # Get user input for speed allocation and check for validity
             while True:
                 speed = int(input(f"""
-Allocate points to Speed (0-{remaining_points}): \n
-                            """))
+Allocate points to Speed (0-{remaining_points}):
+"""))
                 if speed < 0 or speed > remaining_points:
                     print(f"""
 Points must be between 0 and {remaining_points}. Try again.
-                        """)
+""")
                 else:
                     break
 
