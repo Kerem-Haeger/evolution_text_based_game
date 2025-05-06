@@ -19,6 +19,40 @@ class Species:
         self.num_of_fights = 0  # Determine predominant strategy and fitness
         self.num_of_flee = 0  # Determine predominant strategy and fitness
 
+        self.fitness_factors = {
+            "hunting": {"health": 0.2, "speed": 0.4, "strength": 0.4,
+                        "intelligence": 0.0},
+            "gathering": {"health": 0.1, "speed": 0.3, "strength": 0.2,
+                          "intelligence": 0.4},
+            "predator": {"health": 0.3, "speed": 0.3, "strength": 0.4,
+                         "intelligence": 0.0},
+            "default": {"health": 0.3, "speed": 0.3, "strength": 0.3,
+                        "intelligence": 0.1}
+        }
+
+        self.state = "default"
+
+    def calculate_fitness(self):
+        """
+        Calculate the fitness based on the current state of the species.
+        The fitness is a weighted sum of traits, where the weights change
+        depending on the species' needs (e.g., hunting, gathering).
+        """
+        factors = self.fitness_factors[self.state]
+
+        # Calculate fitness by applying the weights to the traits
+        fitness = (self.health * factors['health'] +
+                   self.speed * factors['speed'] +
+                   self.strength * factors['strength'] +
+                   self.intelligence * factors['intelligence'])
+        return fitness
+
+    def set_state(self, new_state):
+        """
+        Set the species' state.
+        """
+        self.state = new_state
+
     def mutate(self):
         """
         Implement random mutation of traits
@@ -38,11 +72,14 @@ class Species:
         """
         Print current species stats, including name
         """
+        fitness = self.calculate_fitness()
         print(f"\nSpecies: {self.name}")
 
         print(f"Health: {self.health}, Speed: {self.speed}, \
 Strength: {self.strength}, Intelligence: {self.intelligence}, \
 Individuals: {self.individuals}")
+
+        print(f"Fitness: {fitness}\n")
 
         if self.is_predator:
             print(f"The {self.name} is a predator!\n")
