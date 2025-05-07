@@ -98,14 +98,10 @@ class Species:
             # Successful food gathering
             food_gathered = random.randint(5, 15)
             self.food += food_gathered
-            print(f"""
-{self.name} successfully gathered {food_gathered} food!
-                """)
+            return f"Successfully gathered {food_gathered} food!"
         else:
             # Unsuccessful food gathering
-            print(f"{self.name} failed to gather food this time.")
-
-        print(f"{self.name} now has {self.food} food.")
+            return "Failed to gather food."
 
     def print_stats(self):
         """
@@ -114,11 +110,13 @@ class Species:
         fitness = self.calculate_fitness()
         print(f"\nSpecies: {self.name}")
 
-        print(f"Health: {self.health}, Speed: {self.speed}, \
-Strength: {self.strength}, Intelligence: {self.intelligence}, \
-Individuals: {self.individuals}")
+        print(f"""
+Health: {self.health}, Speed: {self.speed}, Strength: {self.strength},
+Intelligence: {self.intelligence}, Individuals: {self.individuals}
 
-        print(f"Fitness: {fitness}\n")
+Fitness: {fitness}
+Food: {self.food}
+        """)
 
         if self.is_predator:
             print(f"The {self.name} is a predator!\n")

@@ -10,6 +10,11 @@
 # import time
 import re
 import random
+from rich.console import Console
+from rich.prompt import Prompt
+from prompt_toolkit import prompt
+from prompt_toolkit.key_binding import KeyBindings
+from rich import print
 # import gspread
 # from google.oauth2.service_account import Credentials
 from events import Predator
@@ -161,19 +166,20 @@ def predator_encounter(species):
 
     # Basic game loop to prompt the user
     while species.health > 0:
-        action = input("Do you want to 'fight' or 'flee'? \n").strip().lower()
+        # Use prompt_toolkit for handling the input to support key bindings
+        action = prompt("Do you want to 'fight' or 'flee'? [Fight/Flee]\n").strip().lower()
 
         if "fight" in action or "attack" in action:
             print(f"The {species.name} decided to stand its ground and fight!")
             survived = predator.attack(species)  # Check if species survived
             if not survived:
                 print(f"{species.name} has been defeated!")
-                return  # Exit the loop if the species is defeated
+                return "The species was defeated by the predator!"  # Return the result of the encounter
         elif "flee" in action or "flight" in action:
             survived = predator.flee(species)  # Check if species survived
             if not survived:
                 print(f"{species.name} has been defeated!")
-                return  # Exit the loop if the species is defeated
+                return "The species failed to flee and was defeated!"
         else:
             print("Invalid input. Please enter 'fight' or 'flee'.")
             continue
@@ -183,37 +189,68 @@ def predator_encounter(species):
             break  # Exit the predator encounter and go back to main options
         else:
             print(f"{species.name} has been defeated. Game over.")
-            return  # Exit the main loop if the species is defeated
+            return "The species was defeated in combat."
+
+    return "The species survived the encounter."
 
 
-def get_input(prompt, species):
+def get_input(user_input, species):
     """
     This function calls the stats of the species as well as the instruction
     text whenever called upon.
     """
-    if "stats" in prompt:
+    if "stats" in user_input:
         species.print_stats()
-    elif "help" in prompt:
+    elif "help" in user_input:
         display_help()
     else:
         print("Invalid input. Please try again.")
 
 
+def display_menu(options, selected_index, species, action_feedback=""):
+    """
+    Display the menu with the currently selected option
+    highlighted and keep the species stats visible.
+    Optionally show action feedback (what just happened).
+    """
+    console = Console()
+    console.clear()  # Clear the terminal
+
+    # Display species stats (above the menu)
+    species.print_stats()
+
+    # Display action feedback (e.g., what the species just did)
+    if action_feedback:
+        print(f"[bold yellow]{action_feedback}[/bold yellow]")
+
+    # Display the prompt (below the species stats and action feedback)
+    print(f"\n[bold green]Choose an action:[/bold green]\n")
+
+    # Display options with the selected one highlighted
+    for i, option in enumerate(options):
+        if i == selected_index:
+            # Highlight the selected option: black text on white background
+            print(f"> [black on white]{option}[/black on white] <")
+        else:
+            # Display non-selected options normally
+            print(f"  {option}")
+
+
 def main():
     """
-    Main function to start the game
+    Main function to start the game with simpler inputs
     """
     from species import Species
+    console = Console()  # Initialize Rich console for output
+
     # Display the introduction when the game starts
     display_intro()
 
-    # time.sleep(2)
     # Get the species name from the user
     species_name = name_species()
 
     # Initialize species with default health and user-defined attributes
     species = Species(name=species_name)
-    # This one is important! It enables me to use the variable 'species'!
 
     # Allow the user to allocate points to strength and speed
     allocate_attributes(species)
@@ -221,39 +258,73 @@ def main():
     # Print species stats to see the output
     species.print_stats()
 
-    # time.sleep(2)
+    # Create a list of options for the menu
+    options = [
+        "Gather food",
+        "Explore",
+        "See the leaderboard",
+        "Exit game"
+    ]
 
-    # Example of initializing a predator
-    # later, the values for strength and speed will be randomised, but with
-    # a multiplier depending on the progress of the game
-    # predator_encounter(species)
+    # Initialize selected index
+    selected_index = 0
 
-    # This is the game loop!
-    while species.health > 0:
-        print("\nWhat would you like to do?")
-        print("1. Gather food")
-        print("2. Explore")
-        print("3. See the leaderboard")
-        print("4. Exit game")
+    # Set up a flag to control the game loop
+    running = True
 
-        action = input("Enter your choice (1/2/3/4):\n").strip().lower()
+    # Key bindings to navigate through the menu
+    kb = KeyBindings()
 
-        if "1" in action or "gather" in action or "food" in action:
+    @kb.add('up')
+    def up(event):
+        nonlocal selected_index
+        # Move up through the menu, wrap around to the bottom
+        selected_index = (selected_index - 1) % len(options)
+        display_menu(options, selected_index, species)
+
+    @kb.add('down')
+    def down(event):
+        nonlocal selected_index
+        # Move down through the menu, wrap around to the top
+        selected_index = (selected_index + 1) % len(options)
+        display_menu(options, selected_index, species)
+
+    @kb.add('enter')
+    def enter(event):
+        nonlocal running
+        action_feedback = ""
+        # When enter is pressed, execute the selected option
+        selected_action = options[selected_index]
+        if selected_action == "Gather food":
             if random.random() < 0.1:
                 predator_encounter(species)
+                action_feedback = f"The {species.name} encountered a predator!"
             else:
-                species.gather_food()
-        elif "2" in action or "explore" in action:
+                outcome = species.gather_food()
+                action_feedback = f"The {species.name} attempted to gather food. Outcome: {outcome}"
+        elif selected_action == "Explore":
             # species.explore()
-            # species.evolve()
-            break  # Break for now, do these functions later
-        elif "3" in action or "leader" in action:
-            break  # Break for now, handle leaderboard later
-        elif action == "4":
+            action_feedback = f"The {species.name} explored the surroundings."
+        elif selected_action == "See the leaderboard":
+            action_feedback = "Leaderboard is not implemented yet."
+        elif selected_action == "Exit game":
             print("Exiting game...")
-            break
-        else:
-            get_input(action, species)
+            exit()
+
+        # Show the updated stats and the action feedback
+        display_menu(options, selected_index, species, action_feedback)
+
+        # Stop the game loop for now after showing feedback
+        running = False
+
+    # Start the menu loop
+    display_menu(options, selected_index, species)
+
+    while running:
+        # Keep the prompt active for handling keypresses
+        prompt("""
+Press Enter to select an option, or use Up/Down arrow keys to navigate...
+        """, key_bindings=kb)
 
 
 # Start the game
