@@ -75,7 +75,6 @@ def quit_game(stdscr):
 
 def main(stdscr):
     # Clear screen
-    curses.curs_set(0)  # Hide the cursor
     stdscr.clear()
 
     # Menu options
